@@ -86,7 +86,7 @@ ram.runtime = "100M"
     # This will pick a random port for reverse-proxying and store it as the $port setting
 
     [resources.apt]
-    packages = "php8.3, php8.3-cli, php8.3-mbstring, php8.3-xml, php8.3-mysql, php8.3-intl, php8.3-pdo, php8.3-intl, composer, mariadb-client"
+    packages = "php8.3, php8.3-cli, php8.3-mbstring, php8.3-xml, php8.3-mysql, php8.3-intl, php8.3-pdo, php8.3-intl, composer, mariadb-server, mariadb-client"
 
     [resources.database]
     # This will automatically provision/deprovison a MySQL DB and store the corresponding credentials in settings $db_user, $db_name, $db_pwd

@@ -51,13 +51,13 @@ ram.runtime = "100M"
     type = "group"
     default = "visitors"
 
-    [install.admin]
-    type = "user"
+#    [install.admin]
+#    type = "user"
 
-    [install.password]
-    help.en = "Use the help field to add an information for the admin about this question."
-    help.fr = "Utilisez le champ aide pour ajouter une information à l'intention de l'administrateur à propos de cette question."
-    type = "password"
+#    [install.password]
+#    help.en = "Use the help field to add an information for the admin about this question."
+#    help.fr = "Utilisez le champ aide pour ajouter une information à l'intention de l'administrateur à propos de cette question."
+#    type = "password"
 
 [resources]
     # See the packaging documentation for the full set

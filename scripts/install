@@ -118,6 +118,8 @@ yunohost service add "$app" --description="Web app for displaying, organizing an
 #=================================================
 ynh_script_progression "Installing app with Composer..."
 
+ynh_composer_update 
+# als er iig een ynh_composer_update bestaat...
 ynh_composer_install
 ynh_composer_exec install --no-dev
 

@@ -144,7 +144,7 @@ ynh_script_progression "configuring $app..."
 pushd "$install_dir"
 
 	"php$php_version" artisan key:generate -n --force --env
-	"php$php_version" artisan make:database $app -n --force --env
+	"php$php_version" artisan make:database $app
 	"php$php_version" artisan migrate:fresh --seed -n --force
 	"php$php_version" artisan config:clear -n
 	"php$php_version" artisan config:cache -n

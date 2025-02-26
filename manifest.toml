@@ -13,28 +13,21 @@ maintainers = ["wbk"]
 
 [upstream]
 license = "MIT" 
-demo = "https://demo.myidlers.com/login"
+demo    = "https://demo.myidlers.com/login"
 userdoc = "https://lowendspirit.com/discussion/2449/my-idlers-self-hosted-web-app-for-your-servers-shared-hosting-and-domains-information/"
-code = "https://github.com/cp6/my-idlers#install"
+code    = "https://github.com/cp6/my-idlers#install"
 
 
 [integration]
-yunohost = ">= 12.0.9"
+yunohost        = ">= 12.0.9"
 helpers_version = "2.1"
-architectures = "all"
-multi_instance = true
+architectures   = "all"
+multi_instance  = true
 
-# FIXME: replace with true, false, or "not_relevant".
-# Not to confuse with the "sso" key: the "ldap" key corresponds to wether or not a user *can* login on the app using
-# its YunoHost credentials.
-ldap = "?"
+#try whether integration is possible later on
+ldap = "false"
+sso = "false"
 
-# FIXME: replace with true, false, or "not_relevant".
-# Not to confuse with the "ldap" key: the "sso" key corresponds to wether or not a user is *automatically logged-in*
-# on the app when logged-in on the YunoHost portal.
-sso = "?"
-
-# FIXME: replace with an **estimate** minimum disk and RAM requirements. e.g. 20M, 400M, 1G...
 disk = "100M"
 ram.build = "150M"
 ram.runtime = "100M"
@@ -51,9 +44,9 @@ ram.runtime = "100M"
     type = "group"
     default = "visitors"
 
+# for now no credentials configured, make it install first
 #    [install.admin]
 #    type = "user"
-
 #    [install.password]
 #    help.en = "Use the help field to add an information for the admin about this question."
 #    help.fr = "Utilisez le champ aide pour ajouter une information à l'intention de l'administrateur à propos de cette question."

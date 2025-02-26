@@ -1,1 +1,1 @@
-This is a dummy disclaimer to display prior to the install
+pre-install.md: This is a dummy disclaimer to display prior to the install

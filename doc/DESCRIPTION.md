@@ -1,1 +1,1 @@
-This is a dummy description of this app features
+description.md: This is a dummy description of this app features

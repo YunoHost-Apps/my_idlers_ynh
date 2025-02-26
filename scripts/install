@@ -158,7 +158,7 @@ ynh_store_file_checksum "$install_dir/.env"
 app_key=$(cat $install_dir/.env | grep -e ^APP_KEY | cut -c 9-)
 ynh_app_setting_set --key=app_key --value=$app_key
 
-chgrp "$app" -R "$install_dir/storage" "$install_dir/public" "$install_dir/public/sym"
+chgrp "$app" -R "$install_dir/storage" "$install_dir/public" 
 chmod -R 2775 "$install_dir/storage" "$install_dir/app" "$install_dir/public" "$install_dir/bootstrap/"
 
 #=================================================

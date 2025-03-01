@@ -27,14 +27,6 @@ source /usr/share/yunohost/helpers
 ### or 'example__2', '__3'... for multi-instance installs)
 
 #=================================================
-# INITIALIZE AND STORE SETTINGS
-#=================================================
-
-# wbk fixme - check whether one of these work
-#ynh_composer_version = "2.2.0"
-#ynh_app_setting_set --key=YNH_COMPOSER_VERSION --value=$(composer --version | grep -oE '[0-9]+\.[0-9]+\.[0-9]+')
-
-#=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
 ynh_script_progression "Setting up source files..."
@@ -47,16 +39,9 @@ chown -R "$app:www-data" "$install_dir"
 #=================================================
 ynh_script_progression "Adding $app's configuration files..."
 
-### You can add specific configuration files.
-###
-### Typically, put your template conf file in ../conf/your_config_file
-### The template may contain strings such as __FOO__ or __FOO_BAR__,
-### which will automatically be replaced by the values of $foo and $foo_bar
-### Check the documentation of `ynh_config_add` for more info.
-
 ynh_config_add --template=.env --destination="$install_dir/.env"
 
-chmod 600 "$install_dir/.env"
+chmod 640 "$install_dir/.env"
 chown "$app:www-data" "$install_dir/.env"
 
 
@@ -77,14 +62,17 @@ ynh_script_progression "Adding system configurations related to $app..."
 ###   - And the section "PHP-FPM CONFIGURATION" in the upgrade script
 
 # Create a PHP-FPM config (with conf/extra_php-fpm.conf being appended to it)
+# (added to nginx.conf)
 #ynh_config_add_phpfpm
 
 # Create a dedicated NGINX config using the conf/nginx.conf template
+# (the PHP-FPM config is here as well)
 ynh_config_add_nginx
 
 # systemd : not applicable, runs via php-fpm and nginx
 
 # Create a dedicated Fail2Ban config
+# todo
 #ynh_config_add_fail2ban --logpath="/var/log/nginx/${domain}-error.log" --failregex="Regex to match into the log for a failed login"
 
 #=================================================
@@ -92,12 +80,7 @@ ynh_config_add_nginx
 #=================================================
 ynh_script_progression "Installing app with Composer..."
 
-# ynh_composer_update bestaat niet, proberen met enkel install..
-#ynh_composer_update 
-
-#echo "ynh_composer_version="$ynh_composer_version
 #wbk fixme manual installation needed an update before executing install 
-#ynh_composer_exec update 
 ynh_composer_install
 ynh_composer_exec install --no-dev
 

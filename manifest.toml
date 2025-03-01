@@ -67,6 +67,7 @@ ram.runtime = "100M"
     sha256 = "f92a6dc9c98ec1e3837939db571833d28e72b992f5a9611925e9d242fcb40f72"
 
     [resources.system_user]
+    #user = "__APP_NAME__:rwx"
 
     [resources.install_dir]
     group = "www-data:r-x"

@@ -154,7 +154,8 @@ ynh_script_progression "Starting $app's systemd service..."
 ###   - And the section "STOP SYSTEMD SERVICE" and "START SYSTEMD SERVICE" in the change_url script
 
 # Start a systemd service
-ynh_systemctl --service="$app" --action="start"
+ynh_systemctl --service="nginx" --action="reload"
+ynh_systemctl --service="php__PHP_VERSION__-fpm" --action="reload"
 
 #=================================================
 # END OF SCRIPT

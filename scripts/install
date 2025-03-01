@@ -155,7 +155,7 @@ ynh_script_progression "Starting $app's systemd service..."
 
 # Start a systemd service
 ynh_systemctl --service="nginx" --action="reload"
-ynh_systemctl --service="php__PHP_VERSION__-fpm" --action="reload"
+ynh_systemctl --service="php$php_version-fpm" --action="reload"
 
 #=================================================
 # END OF SCRIPT

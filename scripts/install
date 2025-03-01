@@ -82,41 +82,7 @@ ynh_script_progression "Adding system configurations related to $app..."
 # Create a dedicated NGINX config using the conf/nginx.conf template
 ynh_config_add_nginx
 
-### `ynh_config_add_systemd` is used to configure a systemd script for an app.
-### It can be used for apps that use sysvinit (with adaptation) or systemd.
-### Have a look at the app to be sure this app needs a systemd script.
-### `ynh_config_add_systemd` will use the file conf/systemd.service
-### If you're not using these lines:
-###   - You can remove those files in conf/.
-###   - Remove the section "BACKUP SYSTEMD" in the backup script
-###   - Remove also the section "STOP AND REMOVE SERVICE" in the remove script
-###   - As well as the section "RESTORE SYSTEMD" in the restore script
-###   - And the section "SETUP SYSTEMD" in the upgrade script
-
-# Create a dedicated systemd config
-ynh_config_add_systemd
-
-### `yunohost service add` integrates a service in YunoHost. It then gets
-### displayed in the admin interface and through the others `yunohost service` commands.
-### (N.B.: this line only makes sense if the app adds a service to the system!)
-### If you're not using these lines:
-###   - You can remove these files in conf/.
-###   - Remove the section "REMOVE SERVICE INTEGRATION IN YUNOHOST" in the remove script
-###   - As well as the section "INTEGRATE SERVICE IN YUNOHOST" in the restore script
-###   - And the section "INTEGRATE SERVICE IN YUNOHOST" in the upgrade script
-
-### Additional options starting with 3.8:
-###
-### --test_status "some command"  a custom command to check the status of the service
-###                               (only relevant if 'systemctl status' doesn't do a good job)
-###
-### --test_conf "some command"    some command similar to "nginx -t" that validates the conf of the service
-###
-### Re-calling 'yunohost service add' during the upgrade script is the right way
-### to proceed if you later realize that you need to enable some flags that
-### weren't enabled on old installs (be careful it'll override the existing
-### service though so you should re-provide all relevant flags when doing so)
-yunohost service add "$app" --description="Web app for displaying, organizing and storing information about servers (VPS), shared hosting, reseller hosting, domains and more." --log="/var/log/$app/$app.log"
+# systemd : not applicable, runs via php-fpm and nginx
 
 # Create a dedicated Fail2Ban config
 #ynh_config_add_fail2ban --logpath="/var/log/nginx/${domain}-error.log" --failregex="Regex to match into the log for a failed login"

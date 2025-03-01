@@ -9,11 +9,13 @@ What works:
 * uninstalling 
 
 What does not (yet?) work:
+* no backup
 * moving the app to another domain
 * installing the app in subfolder
 * LDAP integration
 
 What I intend to work on enabling: 
+* YNH backup integration
 * create your account from this install page, instead of manually in the app on first use. Once that is done, I will change the default group from "all_users" to "visitors"
 * moving app to another domain 
 * installing to subdirectory

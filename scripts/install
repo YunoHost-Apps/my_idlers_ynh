@@ -100,7 +100,7 @@ pushd "$install_dir"
 	"php$php_version" artisan migrate:fresh --seed -n --force
 	"php$php_version" artisan config:clear -n
 	"php$php_version" artisan config:cache -n
-	"php$php_version" artisan app:create-user "$name" "$email" "$password"
+	"php$php_version" artisan app:create-user "$user" "$email" "$password"
 
 popd
 

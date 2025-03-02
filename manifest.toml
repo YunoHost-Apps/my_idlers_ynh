@@ -46,7 +46,7 @@ ram.runtime = "100M"
     default = "all_users"
 
 # for now no credentials configured, make it install first
-    [install.name]
+    [install.user]
     help.en = "The name of the user"
     type = "text"
     [install.email]

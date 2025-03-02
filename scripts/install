@@ -47,6 +47,7 @@ chown "$app:www-data" "$install_dir/.env"
 # Inject CreateUser.php into app/Console/Commands/ to extend the upstream version with this functionality
 # Using this, we can create the user with the credentials provided 
 ynh_config_add --template=CreateUser.php --destination="$install_dir/app/Console/Commands/CreateUser.php"
+ynh_config_add --template=CreateUserTest.php --destination="$install_dir/app/Console/Commands/CreateUserTest.php"
 
 #=================================================
 # SYSTEM CONFIGURATION

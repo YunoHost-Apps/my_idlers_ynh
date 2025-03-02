@@ -14,9 +14,8 @@ source /usr/share/yunohost/helpers
 #=================================================
 # STOP SYSTEMD SERVICE
 #=================================================
-ynh_script_progression "Stopping $app's systemd service..."
 
-ynh_systemctl --service="$app" --action="stop"
+## My Idlers runs as a Laravel app on nginx; keep that running. 
 
 #=================================================
 # MODIFY URL IN NGINX CONF
@@ -30,14 +29,9 @@ ynh_config_change_url_nginx
 # SPECIFIC MODIFICATIONS
 #=================================================
 
-## do any changes to files that reference specific installation domain/path, i.e. regenerate configs etc
-
-#=================================================
-# START SYSTEMD SERVICE
-#=================================================
-ynh_script_progression "Starting $app's systemd service..."
-
-ynh_systemctl --service="$app" --action="start"
+## Only the app_url in .env needs to change
+sed -i -e 's/$old_doman/new_domain/g' __INSTALL_DIR__/.env
+sed -i -e 's/$old_path/new_path/g' __INSTALL_DIR__/.env
 
 #=================================================
 # END OF SCRIPT

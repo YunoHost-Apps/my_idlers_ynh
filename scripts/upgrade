@@ -64,6 +64,13 @@ ynh_setup_source --dest_dir="$install_dir" --full_replace --keep=".env data"
 chown -R "$app:www-data" "$install_dir"
 
 #=================================================
+# TODO - DB migration if applicable
+#=================================================
+ynh_script_progression "Migrating $app's database to the new data model..."
+
+## find upstream migration script
+
+#=================================================
 # UPDATE A CONFIG FILE
 #=================================================
 ynh_script_progression "Updating $app's configuration files..."
@@ -73,13 +80,14 @@ ynh_script_progression "Updating $app's configuration files..."
 ### The file will automatically be backed-up if it's found to be manually modified (because
 ### ynh_config_add keeps track of the file's checksum)
 
-ynh_config_add --template="some_config_file" --destination="$install_dir/some_config_file"
+#ynh_config_add --template="some_config_file" --destination="$install_dir/some_config_file"
+# there's just the nginx conf and the .env that's still available (--keep above)
 
 # FIXME: this should be handled by the core in the future
 ### You may need to use chmod 600 instead of 400,
 ### for example if the app is expected to be able to modify its own config
-chmod 400 "$install_dir/some_config_file"
-chown "$app:$app" "$install_dir/some_config_file"
+#chmod 400 "$install_dir/some_config_file"
+#chown "$app:$app" "$install_dir/some_config_file"
 
 ### For more complex cases where you want to replace stuff using regexes,
 ### you shoud rely on ynh_replace (which is basically a wrapper for sed)
@@ -95,24 +103,9 @@ ynh_script_progression "Upgrading system configurations related to $app..."
 
 ### This should be a literal copypaste of what happened in the install's "System configuration" section
 
-ynh_config_add_phpfpm
-
 ynh_config_add_nginx
 
-ynh_config_add_systemd
-
-yunohost service add "$app" --description="A short description of the app" --log="/var/log/$app/$app.log"
-
-ynh_config_add_logrotate
-
-ynh_config_add_fail2ban --logpath="/var/log/nginx/${domain}-error.log" --failregex="Regex to match into the log for a failed login"
-
-#=================================================
-# START SYSTEMD SERVICE
-#=================================================
-ynh_script_progression "Starting $app's systemd service..."
-
-ynh_systemctl --service="$app" --action="start"
+#ynh_config_add_fail2ban --logpath="/var/log/nginx/${domain}-error.log" --failregex="Regex to match into the log for a failed login"
 
 #=================================================
 # END OF SCRIPT

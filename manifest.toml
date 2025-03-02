@@ -4,7 +4,7 @@ packaging_format = 2
 
 id = "my_idlers"
 name = "My Idlers"
-description.en = "A self-hosted web app for displaying, organizing and storing information about your servers (VPS/Dedi), shared & reseller hosting, seedboxes, domains, DNS and misc services."
+description.en = "A self-hosted web app for displaying, organizing and storing information about your servers (VPS/Dedi), shared & reseller hosting, seedboxes, domains, DNS and misc services. Are you the person in your family, group of friends or at work who keeps an eye on everyones Yunohosts, then this is the app to help you."
 description.fr = "Une application Web auto-hébergée pour afficher, organiser et stocker des informations sur vos serveurs (VPS/Dedi), votre hébergement partagé et revendeur, vos seedboxes, vos domaines, vos DNS et divers services."
 
 version = "3.0~ynh1"
@@ -46,12 +46,16 @@ ram.runtime = "100M"
     default = "all_users"
 
 # for now no credentials configured, make it install first
-#    [install.admin]
-#    type = "user"
-#    [install.password]
-#    help.en = "Use the help field to add an information for the admin about this question."
-#    help.fr = "Utilisez le champ aide pour ajouter une information à l'intention de l'administrateur à propos de cette question."
-#    type = "password"
+    [install.name]
+    help.en = "The name of the user"
+    type = "text"
+    [install.email]
+    help.en = "The email address used for logging in to the application"
+    type = "email"
+    [install.password]
+    help.en = "Use the help field to add an information for the admin about this question."
+    help.fr = "Utilisez le champ aide pour ajouter une information à l'intention de l'administrateur à propos de cette question."
+    type = "password"
 
 [resources]
     # See the packaging documentation for the full set

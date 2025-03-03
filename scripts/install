@@ -102,12 +102,11 @@ pushd "$install_dir"
 	"php$php_version" artisan key:generate -n --force --env
 	"php$php_version" artisan make:database $app
 	"php$php_version" artisan migrate:fresh --seed -n --force
-	"php$php_version" artisan config:clear -n
-	"php$php_version" artisan config:cache -n
      #"php$php_version" artisan app:create-user "$user" "$email" "$password"
      # Alternative method: direct injection of credentials using Artisan Tinker: 
      echo "use App\Models\User; User::create(['name' => '$user', 'email' => '$email' , 'password' => bcrypt ('$password'), 'api_token' => '$token']); " | php artisan tinker
-
+	"php$php_version" artisan config:clear -n
+	"php$php_version" artisan config:cache -n
 popd
 
 

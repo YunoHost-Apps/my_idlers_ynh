@@ -15,9 +15,6 @@ ynh_script_progression "Restoring the app main directory..."
 
 ynh_restore "$install_dir"
 
-### $install_dir will automatically be initialized with some decent
-### permissions by default... however, you may need to recursively reapply
-### ownership to all files such as after the ynh_setup_source step
 chown -R "$app:www-data" "$install_dir"
 
 #=================================================
@@ -32,14 +29,7 @@ ynh_mysql_db_shell < ./db.sql
 #=================================================
 ynh_script_progression "Restoring system configurations related to $app..."
 
-### This should be a symetric version of what happens in the install script
-
 ynh_restore "/etc/nginx/conf.d/$domain.d/$app.conf"
-
-
-#ynh_restore "/etc/fail2ban/jail.d/$app.conf"
-#ynh_restore "/etc/fail2ban/filter.d/$app.conf"
-#ynh_systemctl --action=restart --service=fail2ban
 
 #=================================================
 # RELOAD NGINX AND PHP-FPM OR THE APP SERVICE

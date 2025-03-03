@@ -36,16 +36,14 @@ ram.runtime = "100M"
     [install.domain]
     type = "domain"
 
-# unable to get this to work, disable for now    
-#    [install.path]
-#    type = "path"
-#    default = "/idlers"
+    # unable to get this to work, disable for now    
+    #[install.path]
+    #type = "path"
+    #default = "/idlers"
 
     [install.init_main_permission]
     type = "group"
     default = "all_users"
-
-# for now no credentials configured, make it install first
     [install.user]
     help.en = "The name of the user"
     type = "string"
@@ -56,19 +54,12 @@ ram.runtime = "100M"
     help.en = "Use the help field to add an information for the admin about this question."
     help.fr = "Utilisez le champ aide pour ajouter une information à l'intention de l'administrateur à propos de cette question."
     type = "password"
-#    [install.token]
-#    type = "string" 
     
 [resources]
-    # See the packaging documentation for the full set
-    # of explanation regarding the behavior and properties for each of those
-
     [resources.sources]
 
     [resources.sources.main]
-    # This will pre-fetch the asset which can then be deployed during the install/upgrade scripts with :
-    #    ynh_setup_source --dest_dir="$install_dir"
-    # You can also define other assets than "main" and add --source_id="foobar" in the previous command
+    # This will pre-fetch the asset 
     url = "https://github.com/cp6/my-idlers/archive/refs/tags/3.0.zip"
     sha256 = "f92a6dc9c98ec1e3837939db571833d28e72b992f5a9611925e9d242fcb40f72"
 
@@ -79,16 +70,12 @@ ram.runtime = "100M"
     group = "www-data:r-x"
 
     [resources.permissions]
-    # This will configure SSOwat permission for $domain/$path/
-    # The initial allowed group of user is configured via the init_main_permission question (public=visitors, private=all_users)
     main.url = "/"
 
     [resources.ports]
-    # This will pick a random port for reverse-proxying and store it as the $port setting
 
     [resources.apt]
     packages = "php8.3, php8.3-cli, php8.3-mbstring, php8.3-xml, php8.3-mysql, php8.3-intl, php8.3-pdo, php8.3-intl, composer, mariadb-server, mariadb-client, php8.3-curl"
 
     [resources.database]
-    # This will automatically provision/deprovison a MySQL DB and store the corresponding credentials in settings $db_user, $db_name, $db_pwd
     type = "mysql"

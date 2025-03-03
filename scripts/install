@@ -7,25 +7,6 @@
 source _common.sh
 source /usr/share/yunohost/helpers
 
-### Install parameters are automatically saved as settings
-###
-### Settings are automatically loaded as bash variables
-### in every app script context, therefore typically these will exist:
-### - $domain
-### - $path
-### - $language
-### ... etc
-###
-### Resources defined in the manifest are provisioned prior to this script
-### and corresponding settings are also available, such as:
-### - $install_dir
-### - $port
-### - $db_name
-### ...
-###
-### $app is the app id (i.e. 'example' for first install,
-### or 'example__2', '__3'... for multi-instance installs)
-
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
@@ -44,48 +25,18 @@ ynh_config_add --template=.env --destination="$install_dir/.env"
 chmod 640 "$install_dir/.env"
 chown "$app:www-data" "$install_dir/.env"
 
-# Inject CreateUser.php into app/Console/Commands/ to extend the upstream version with this functionality
-# Using this, we can create the user with the credentials provided 
-#ynh_config_add --template=CreateUser.php --destination="$install_dir/app/Console/Commands/CreateUser.php"
-#ynh_config_add --template=CreateUserTest.php --destination="$install_dir/app/Console/Commands/CreateUserTest.php"
-# Scratch that. CreateUser crashes without the test file, the test file depends on class testcases. I'll look for a solution that does not pull in a boatload of dependencies. 
-
 #=================================================
 # SYSTEM CONFIGURATION
 #=================================================
 ynh_script_progression "Adding system configurations related to $app..."
 
-### `ynh_config_add_phpfpm` is used to set up a PHP config.
-### You can remove it if your app doesn't use PHP.
-### `ynh_config_add_phpfpm` will use the files conf/extra_php-fpm.conf
-### If you're not using these lines:
-###   - You can remove these files in conf/.
-###   - Remove the section "BACKUP THE PHP-FPM CONFIGURATION" in the backup script
-###   - Remove also the section "REMOVE PHP-FPM CONFIGURATION" in the remove script
-###   - As well as the section "RESTORE THE PHP-FPM CONFIGURATION" in the restore script
-###     with the reload at the end of the script.
-###   - And the section "PHP-FPM CONFIGURATION" in the upgrade script
-
-# Create a PHP-FPM config (with conf/extra_php-fpm.conf being appended to it)
-# (added to nginx.conf)
-#ynh_config_add_phpfpm
-
-# Create a dedicated NGINX config using the conf/nginx.conf template
-# (the PHP-FPM config is here as well)
 ynh_config_add_nginx
-
-# systemd : not applicable, runs via php-fpm and nginx
-
-# Create a dedicated Fail2Ban config
-# todo
-#ynh_config_add_fail2ban --logpath="/var/log/nginx/${domain}-error.log" --failregex="Regex to match into the log for a failed login"
 
 #=================================================
 # INSTALL APP WITH COMPOSER
 #=================================================
 ynh_script_progression "Installing app with Composer..."
 
-#wbk fixme manual installation needed an update before executing install 
 ynh_composer_install
 ynh_composer_exec install --no-dev
 
@@ -94,24 +45,16 @@ ynh_composer_exec install --no-dev
 #=================================================
 ynh_script_progression "configuring $app..."
 
-# Generate a random alfanumeric string as API token 
-
-
 pushd "$install_dir"
-
 	"php$php_version" artisan key:generate -n --force --env
 	"php$php_version" artisan make:database $app
 	"php$php_version" artisan migrate:fresh --seed -n --force
-     #"php$php_version" artisan app:create-user "$user" "$email" "$password"
-     # Alternative method: direct injection of credentials using Artisan Tinker: 
-     echo "use App\Models\User; User::create(['name' => '$user', 'email' => '$email' , 'password' => bcrypt ('$password'), 'api_token' => '$token']); " | php artisan tinker
 	"php$php_version" artisan config:clear -n
 	"php$php_version" artisan config:cache -n
 popd
 
 
-# copy/paste from lychee install, for what it's worth...
-# file was touched by artisan, rehash it
+# file was touched by artisan, create a new key (copy/paste from Lychee)
 ynh_store_file_checksum "$install_dir/.env"
 app_key=$(cat $install_dir/.env | grep -e ^APP_KEY | cut -c 9-)
 ynh_app_setting_set --key=app_key --value=$app_key
@@ -123,18 +66,12 @@ chmod -R 2775 "$install_dir/storage" "$install_dir/app" "$install_dir/public" "$
 #=================================================
 # SETUP APPLICATION WITH CURL
 #=================================================
-
-### Use these lines only if the app installation needs to be finalized through
-### web forms. We generally don't want to ask the final user,
-### so we're going to use curl to automatically fill the fields and submit the
-### forms.
-
-# Installation with curl
 ynh_script_progression "Finalizing installation..."
-#ynh_local_curl "/INSTALL_PATH" "key1=$name" "key2=$email" "key3=$password" "key4=$password"
+
+# Installation with curl: set up the first/single user
+ynh_local_curl "/INSTALL_PATH" "key1=$user" "key2=$email" "key3=$password" "key4=$password"
 
 #=================================================
 # END OF SCRIPT
 #=================================================
-
 ynh_script_progression "Installation of $app completed"

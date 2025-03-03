@@ -95,7 +95,7 @@ ynh_composer_exec install --no-dev
 ynh_script_progression "configuring $app..."
 
 # Generate a random alfanumeric string as API token 
-token = $(tr -dc A-Za-z0-9 </dev/urandom | head -c 60)
+
 
 pushd "$install_dir"
 

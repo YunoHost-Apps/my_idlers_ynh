@@ -46,7 +46,6 @@ ram.runtime = "100M"
     default = "all_users"
 
 # for now no credentials configured, make it install first
-token=$(tr -dc A-Za-z0-9 </dev/urandom | head -c 60)
     [install.user]
     help.en = "The name of the user"
     type = "string"
@@ -57,8 +56,8 @@ token=$(tr -dc A-Za-z0-9 </dev/urandom | head -c 60)
     help.en = "Use the help field to add an information for the admin about this question."
     help.fr = "Utilisez le champ aide pour ajouter une information à l'intention de l'administrateur à propos de cette question."
     type = "password"
-    [install.token]
-    type = "string" 
+#    [install.token]
+#    type = "string" 
     
 [resources]
     # See the packaging documentation for the full set

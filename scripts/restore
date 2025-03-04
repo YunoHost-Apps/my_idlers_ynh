@@ -31,6 +31,9 @@ ynh_script_progression "Restoring system configurations related to $app..."
 
 ynh_restore "/etc/nginx/conf.d/$domain.d/$app.conf"
 
+chgrp "www-data" -R "$install_dir/storage" "$install_dir/public" 
+chmod -R 2775 "$install_dir/storage" "$install_dir/app" "$install_dir/public" "$install_dir/bootstrap/"
+
 #=================================================
 # RELOAD NGINX AND PHP-FPM OR THE APP SERVICE
 #=================================================

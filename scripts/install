@@ -60,7 +60,7 @@ app_key=$(cat $install_dir/.env | grep -e ^APP_KEY | cut -c 9-)
 ynh_app_setting_set --key=app_key --value=$app_key
 
 # group only, make it www-data vs user/group $app:www-data
-chgrp "www-data" -R "$install_dir/storage" "$install_dir/public" 
+chgrp "www-data" -R "https://$domain/$path/register" "$install_dir/public" 
 chmod -R 2775 "$install_dir/storage" "$install_dir/app" "$install_dir/public" "$install_dir/bootstrap/"
 
 #=================================================

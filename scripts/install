@@ -13,7 +13,6 @@ source /usr/share/yunohost/helpers
 ynh_script_progression "Setting up source files..."
 
 ynh_setup_source --dest_dir="$install_dir"
-chown -R "$app:www-data" "$install_dir"
 
 #=================================================
 # APP INITIAL CONFIGURATION
@@ -21,9 +20,6 @@ chown -R "$app:www-data" "$install_dir"
 ynh_script_progression "Adding $app's configuration files..."
 
 ynh_config_add --template=.env --destination="$install_dir/.env"
-
-chmod 640 "$install_dir/.env"
-chown "$app:www-data" "$install_dir/.env"
 
 #=================================================
 # SYSTEM CONFIGURATION
@@ -74,4 +70,5 @@ ynh_local_curl "/INSTALL_PATH" "key1=$user" "key2=$email" "key3=$password" "key4
 #=================================================
 # END OF SCRIPT
 #=================================================
+
 ynh_script_progression "Installation of $app completed"

@@ -1,20 +1,11 @@
 #!/bin/bash
 
-## new location is available via $domain and $path (or $new_domain and $new_path variables if you want to be explicit)
-## old values are available via, you guessed it, $old_domain and $old_path
-
 #=================================================
 # IMPORT GENERIC HELPERS
 #=================================================
 
 source _common.sh
 source /usr/share/yunohost/helpers
-
-#=================================================
-# STOP SYSTEMD SERVICE
-#=================================================
-
-## My Idlers runs as a Laravel app on nginx; keep nginx running, so no stop
 
 #=================================================
 # MODIFY URL IN NGINX CONF

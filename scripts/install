@@ -49,23 +49,13 @@ pushd "$install_dir"
 	"php$php_version" artisan config:cache -n
 popd
 
-
-# file was touched by artisan, create a new key (copy/paste from Lychee)
-ynh_store_file_checksum "$install_dir/.env"
-app_key=$(cat $install_dir/.env | grep -e ^APP_KEY | cut -c 9-)
-ynh_app_setting_set --key=app_key --value=$app_key
-
-# group only, make it www-data vs user/group $app:www-data
-chgrp "www-data" -R "$install_dir/storage" "$install_dir/public" 
-chmod -R 2775 "$install_dir/storage" "$install_dir/app" "$install_dir/public" "$install_dir/bootstrap/"
-
 #=================================================
 # SETUP APPLICATION WITH CURL
 #=================================================
 ynh_script_progression "Finalizing installation..."
 
 # Installation with curl: set up the first/single user
-ynh_local_curl "/INSTALL_PATH" "key1=$user" "key2=$email" "key3=$password" "key4=$password"
+ynh_local_curl "/INSTALL_PATH" "key1=$admin" "key2=$email" "key3=$password" "key4=$password"
 
 #=================================================
 # END OF SCRIPT
